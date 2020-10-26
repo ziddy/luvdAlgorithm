@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>개발팀 알고리즘 1주차</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    
+    
+</head>
+<body>
+1. 완주하지 못한 선수<br>
+<script>
+    const solution = (participant, completion) => {
+        // 1번, 2번 통과 return participant.filter(word => !completion.includes(word));
+        // 그러나 3번은 중복되는 단어까지 지워버려서 통과 안 됨
+        participant.sort();
+        completion.sort();
+
+        for(let i in participant) {
+            if(participant[i] !== completion[i]){
+                return participant[i];
+            }
+        }
+    }
+    document.write(solution(['mislav', 'stanko', 'mislav', 'ana'],['mislav','stanko', 'ana']));
+</script>
+<hr>
+2. 모의고사<br>
+<script>
+    const solution2 = answers => {
+        let manOne=[1, 2, 3, 4, 5];
+        let manTwo=[2, 1, 2, 3, 2, 4, 2, 5];
+        let manThree=[3, 3, 1, 1, 2, 2, 4, 4, 5, 5];
+        let score=[0, 0, 0];
+
+        for(let i = 0; i<answers.length; i++){
+          if(manOne[i % manOne.length] === answers[i]){ // 찍은게 정답과 일치할 때 스코어 올라감
+              score[0]++;
+          };
+      
+          if(manTwo[i % manTwo.length] === answers[i]){
+              score[1]++;
+          };
+      
+          if(manThree[i % manThree.length] === answers[i]){
+              score[2]++;
+          };
+        };
+    
+        let max = Math.max(...score); //제일 큰 숫자
+        let result=[];
+          for(let j = 0; j < score.length; j++){
+            if(score[j] === max){
+              result.push(j + 1);
+            };
+          };
+      
+        return `${result}번째 수포자가 1등입니다.`;
+    }
+    document.write(solution2([1,1,1,1,1,1]));
+</script>
+</body>
+</html>
