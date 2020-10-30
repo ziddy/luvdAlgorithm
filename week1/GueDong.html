@@ -37,7 +37,7 @@
 
         for(let i = 0; i<answers.length; i++){
           if(manOne[i % manOne.length] === answers[i]){ // 찍은게 정답과 일치할 때 스코어 올라감
-              score[0]++;
+              score[0]++; // %를 하는 이유, a % b 할 때 a<b면 항상 a 값이 나온다. 수포자가 답 찍는 방식을 계속 돌리기 위해서
           };
       
           if(manTwo[i % manTwo.length] === answers[i]){
@@ -51,7 +51,7 @@
     
         let max = Math.max(...score); //제일 큰 숫자
         let result=[];
-          for(let j = 0; j < score.length; j++){
+          for(let j = 0; j < score.length; j++){//for문으로 통해 나온 결과값을 한 배열로 만드려면 새 배열을 하나 만들어서 push 하면 된다.
             if(score[j] === max){
               result.push(j + 1);
             };
