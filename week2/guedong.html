@@ -48,15 +48,38 @@
 3. 크레인 인형뽑기 게임<br>
 <script>
     const solution3 = (board, moves) => {
-        let result = [];
-        for(let j in moves){
-            for(let i in board){
-                if(board[i][moves[j] - 1] > 0){
-                    result.push(i);
-                }
+        //for(let j in moves){ 답은 나왔으나 과정이 정확하지 않음
+        //    for(let i in board){
+        //        if(board[i][moves[j] - 1] > 0){
+        //            result.push(i);
+        //        }
+        //    }
+        //}
+        //return [...new Set(result)].length;
+        const transform = process =>
+            process.reduce(
+                (a, c) => c.map((_ , index) => [...(a[index] || []), c[index]]),[]
+            );
+        // 세로로 분산된 데이터를 가로로 재배치
+
+        const processTwo = transform(board).map(data =>
+            data.reverse().filter(data => data !== 0)
+        ); //0인 숫자 제거
+        
+        const basket = [];
+        let result = 0;
+
+        for (const move of moves){
+            const pop = processTwo[move - 1].pop();
+            if(!pop) continue;
+            if (pop === basket[basket.length - 1]){
+                basket.pop();
+                result += 2;
+                continue;
             }
+            basket.push(pop);
         }
-        return [...new Set(result)].length;
+        return result;
     }
 
     document.write(solution3([[0,0,0,0,0],
