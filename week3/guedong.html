@@ -13,9 +13,10 @@
 <script>
     const solution = name => {
         let answer = 0;
-        const process1 = name.length - 1;
-        const z = 'Z'.charCodeAt(0);
-        const a = 'A'.charCodeAt(0);
+        const process1 = name.length - 1; //좌우로 움직이는 갯수
+        const z = 'Z'.charCodeAt(0); //ASCII코드를 리턴 z:90; a:65;
+        const a = 'A'.charCodeAt(0); // A,Z 현재 글자 코드를 저장 및 비교해서 더해준다
+        console.log(a);
         for(let i in name){
             const cur = name[i].charCodeAt(0);
             answer += (z - cur + 1) > cur - a ? cur - a : (z - cur + 1);
@@ -27,7 +28,10 @@
                     countA++;
                     nextIdx++;
                 }
-                const temp = ( name.charAt(0)=='A'? 0 : (i-1)*2 )+(name.length-(1+i+countA));
+                const temp = ( name.charAt(0)=='A'? 0 : (i-1)*2 )+(name.length-(1+i+countA)); 
+                //첫번째,두번째 알파벳이 A면 오른쪽으로 움직일 필요가 없음, 왼쪽으로 깡총, x2를 해주는 이유는 세번째 알파벳부터는 이전 알파벳(i-1)만큼 온거리를 돌아가는 거리
+                //name.length-(1+i+countA) => 현재 위치에서 A가 연속되는 개수를 총길이에서 뺌. 처음 및 두번째 알파벳이 'A'일 경우 움직이는 최소거리.
+                //A를 만났을 경우 A가 연속되는 갯수를 파악후 A를 넘어가는 것과 돌아가는 것 중 어느 것이 더 적은 움직임인지 판별하고 최종적으로 좌우로 움직이는 최소 거리를 answer에 더해줌
                 if(process1 > temp) {
                     process1 = temp;
                 }
@@ -46,7 +50,7 @@
        const process1 = strNum.sort((a, b)=>
            // +([...a][0] < [...b][0]) ||
            // -([...a][0] > [...b][0]) 1번 통과
-           (b + a) - (a + b)
+           (b + a) - (a + b) //연결하여 비교정렬 ex) ('3','30' => ('303')-('330'))
        )
        return process1.join('');
     }
@@ -58,15 +62,15 @@
     const solution3 = (genres, plays) => {
         let answer = [];
         const list = genres.reduce((hash, g, i) => {
-            if (!hash[g]) {
+            if (!hash[g]) { // 누적값이 없으면 객체 생성
                 hash[g] = {plays: plays[i], music: []};
-            } else {
+            } else { //있으면 총 재생횟수 더하기
                 hash[g].plays += plays[i];
             }
-            hash[g].music.push([i, plays[i]]);
+            hash[g].music.push([i, plays[i]]); //노래 번호: i , 노래 재생횟수
             return hash;
         }, {});
-        const sorted = Object.values(list).sort((l, r) => r.plays - l.plays);
+        const sorted = Object.values(list).sort((l, r) => r.plays - l.plays); //내림차순으로 정렬
         sorted.forEach((g) => {
             if (g.music.length > 1) {
                 g.music.sort((l, r) => {
