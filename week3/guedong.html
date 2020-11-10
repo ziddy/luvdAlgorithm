@@ -16,9 +16,9 @@
         const process1 = name.length - 1; //좌우로 움직이는 갯수
         const z = 'Z'.charCodeAt(0); //ASCII코드를 리턴 z:90; a:65;
         const a = 'A'.charCodeAt(0); // A,Z 현재 글자 코드를 저장 및 비교해서 더해준다
-        console.log(a);
         for(let i in name){
             const cur = name[i].charCodeAt(0);
+            console.log(cur);
             answer += (z - cur + 1) > cur - a ? cur - a : (z - cur + 1);
             if(cur === a){
                 const nextIdx = i+1;
@@ -71,6 +71,8 @@
             return hash;
         }, {});
         const sorted = Object.values(list).sort((l, r) => r.plays - l.plays); //내림차순으로 정렬
+        console.log(sorted);
+        // [{plays: 3100, music: [[4, 2500],[1,600]]},{plays: 1450, music: [[3,800],[0,500],[2,150]}]
         sorted.forEach((g) => {
             if (g.music.length > 1) {
                 g.music.sort((l, r) => {
