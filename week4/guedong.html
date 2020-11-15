@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>개발팀 알고리즘 4주차</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    
+    
+</head>
+<body>
+1. 디스크 컨트롤러 lv.3 <br>
+<script>
+    const solution = jobs => {
+        let temp = [];
+        let answer = 0;
+        let time = 0;
+        jobs.sort((a,b)=> { //[[0,3],[2,6],[1,9]]
+                return a[1] < b[1] ? -1 : a[1] > b[1] ? 1 : 0;
+            });
+        for(let i in jobs){ //대체 배열 만드니 성공
+            temp.push(jobs[i]);
+            time += temp[0][1];
+            answer += time - temp[0][0];
+            jobs.shift();
+        }
+        return answer/jobs.length;
+    }
+    document.write(solution([[0,3],[1,9],[2,6]]));
+</script>
+<hr>
+2. 프린터 lv.2<br>
+<script>
+    const solution2 = (priorities, location) => {
+        const process1 = priorities.map((v,i)=>{
+            return {
+                sig: v,
+                val: i
+            }
+        })
+        const process2 = priorities.map((v,i)=>i); //[0,1,2,3] 문자 순서
+        process1.sort((a,b)=> { 
+                return a.sig > b.sig ? -1 : a.sig < b.sig ? 1 : 0 || 
+                       a.val > b.val ? -1 : a.val < b.val ? 1 : 0;
+            });
+        /*
+        [
+            {sig: 3, val: 2('C')},
+            {sig: 2, val: 3('D')},
+            {sig: 2, val: 0('A')},
+            {sig: 1, val: 1('B')}
+        ]
+        */
+        return process1.map(v=>v.val).indexOf(process2[location]) + 1;
+    }
+    document.write(solution2([2,1,3,2],2));
+</script>
+<hr>
+3. 기능개발 lv.2<br>
+<script>
+    const solution3 = (prog,speeds) => {
+        let answer = [];
+        let finished = []; //완료일
+        for(let i in prog){
+            finished.push(Math.ceil((100-prog[i])/speeds[i]));
+            //[7,3,9] 완료까지 걸리는 날짜들
+        }
+        while(finished.length>0){ //finished가 없어질 때까지 시행
+            let first = finished[0];
+            let count = finished.findIndex(num=> first<num);//첫 완료일보다 값이 큰 객체는 몇 번째?
+            // count 2, -1
+            if(count !== -1){
+                answer.push(count);//[2]
+                finished.splice(0, count);//[7,3]
+            }else{
+                answer.push(finished.length);//[2,1]
+                finished.splice(0, finished.length);//[7]
+            }
+        }
+        return answer;
+    }
+    document.write(solution3([93,30,55],[1,30,5]));
+</script>
+</body>
+</html>

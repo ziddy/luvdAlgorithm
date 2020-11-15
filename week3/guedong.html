@@ -71,6 +71,7 @@
             return hash;
         }, {});
         const sorted = Object.values(list).sort((l, r) => r.plays - l.plays); //내림차순으로 정렬
+        // 객체의 v값을 가져옴
         sorted.forEach((g) => {
             if (g.music.length > 1) {
                 g.music.sort((l, r) => {
