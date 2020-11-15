@@ -71,8 +71,12 @@
             return hash;
         }, {});
         const sorted = Object.values(list).sort((l, r) => r.plays - l.plays); //내림차순으로 정렬
+<<<<<<< HEAD
         console.log(sorted);
         // [{plays: 3100, music: [[4, 2500],[1,600]]},{plays: 1450, music: [[3,800],[0,500],[2,150]}]
+=======
+        // 객체의 v값을 가져옴
+>>>>>>> 110e2fe... 데헷
         sorted.forEach((g) => {
             if (g.music.length > 1) {
                 g.music.sort((l, r) => {
