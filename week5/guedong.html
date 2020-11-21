@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>개발팀 알고리즘 4주차</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    
+    
+</head>
+<body>
+1. 자동완성 lv.4 <br>
+<script>
+    const solution1 = words => {
+        let answer = 0;
+        words = words.sort();
+        console.log(words); //['war','warrior','word','world']
+        words.forEach( (v, i) => {
+            let typed =""; //새 문자열 만듬
+            for( let j = 0 ; j < v.length; j ++){
+                typed += v[j]; //타이핑을 반복문으로
+                answer++;
+                const temp = [];
+                if( i > 0){ //이전 단어와 비교
+                    temp.push((words[i-1].substr(0, j+1))); 
+                }
+                if( i < words.length-1){
+                    temp.push((words[i+1].substr(0, j+1))); 
+                }
+            
+                if( !temp.includes(typed)) break;
+                console.log(temp);
+            }
+            console.log(typed);
+        })
+        return answer;
+    }
+    document.write(solution1(['word','war','warrior','world']));
+</script>
+<hr>
+2. 문자열 압축 lv.2<br>
+<script>
+    const solution2 = s => {
+        const process1 = v => {
+            let newLen = 0;
+            for( let i = 0 ; i < v.length ; i++ ){
+                if( v[i] !== 1 ){ // 1은 무의미하니 제외, 3abcd
+                    newLen += (v[i]).toString().length;
+                    //tostring [1,2,3] => '1,2,3'
+                    //JSON.stringify [1,2,3] => '[1,2,3]'
+                }
+            }
+        return newLen;
+    };
+    let max = 1000; // s의 길이는 1000 이하
+    for( let i = 1 ; i <= s.length ; i++ ){ // s의 길이는 1 이상
+        let result = [];
+        for( let j = 0 ; j < s.length ; j){
+            let temps = "";
+            for( let k = 0 ; k < i && j + k < s.length ; k++ ){
+                temps += s[ j + k ];
+            }
+            if( result[ result.length - 1 ] === temps ){
+                result[ result.length - 2 ]++; // 같은 거 있음 숫자 올리기
+            }else{
+                result.push( 1 , temps );
+            }
+            j += i; // 순서대로 추가
+        }
+        if( process1( result ) < max ){
+            max = process1( result );
+        }
+        console.log(result); // [3, 'ab' , 1 , 'cd']
+    }
+    return max;
+}
+    document.write(solution2('abababcd'));
+</script>
+<p>
+    <h1>Flat()</h1>
+    <a>https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/flat</a>
+    
+</p>
+</body>
+</html>
